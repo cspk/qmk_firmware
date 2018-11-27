@@ -1,10 +1,8 @@
 #include QMK_KEYBOARD_H
 
-#define SHIFT_MASK (MOD_BIT(KC_LSHIFT) | MOD_BIT(KC_RSHIFT))
-#define ALT_MASK (MOD_BIT(KC_LALT) | MOD_BIT(KC_RALT))
-
 #define LAYER_BASIC 0
 #define LAYER_FUNCTION 1
+#define LAYER_PGUPDOWN 2
 
 #define _______ KC_TRNS
 
@@ -20,98 +18,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 	[LAYER_FUNCTION] = LAYOUT_60_ansi(
 		KC_TILD,KC_F1  ,KC_F2  ,KC_F3  ,KC_F4  ,KC_F5  ,KC_F6  ,KC_F7  ,KC_F8  ,KC_F9  ,KC_F10 ,KC_F11 ,KC_F12 ,KC_DEL, \
 		_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______, _______, _______, _______, \
-		_______,_______,_______,_______,_______,_______,KC_LEFT,F(0),F(1),KC_RGHT,_______,KC_GRV ,_______, \
-		_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______, \
+		_______,_______,_______,_______,_______,_______,KC_LEFT,KC_DOWN,KC_UP,KC_RGHT,_______,KC_GRV ,_______, \
+		MO(LAYER_PGUPDOWN),_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,MO(LAYER_PGUPDOWN), \
 		_______,_______,_______,  KC_CAPS,  _______,_______,_______,RESET
 	),
+
+	[LAYER_PGUPDOWN] = LAYOUT_60_ansi(
+		_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______, \
+		_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______, \
+		_______,_______,_______,_______,_______,_______,KC_HOME,KC_PGDN,KC_PGUP,KC_END ,_______,_______,_______, \
+		_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______, \
+		_______,_______,_______,_______,_______,_______,_______,_______
+	),
 };
-
-enum function_id {
-	PGDOWN,
-	PGUP
-};
-
-const uint16_t PROGMEM fn_actions[] = {
-	[0] = ACTION_FUNCTION(PGDOWN),
-	[1] = ACTION_FUNCTION(PGUP)
-};
-
-void action_function(keyrecord_t *record, uint8_t id, uint8_t opt) {
-	uint8_t shift_mask = 0;
-	uint8_t alt_mask = 0;
-	switch (id) {
-	case PGDOWN:
-		shift_mask = get_mods() & SHIFT_MASK;
-		alt_mask = get_mods() & ALT_MASK;
-		if (record->event.pressed) {
-			if (shift_mask) {
-				add_key(KC_PGDN);
-				send_keyboard_report();
-			}
-			else if (alt_mask) {
-				add_key(KC_END);
-				unregister_code(KC_LALT);
-				send_keyboard_report();
-				register_code(KC_LALT);
-			}
-			else {
-				add_key(KC_DOWN);
-				send_keyboard_report();
-			}
-		}
-		else {
-			if (shift_mask) {
-				del_key(KC_PGDN);
-				send_keyboard_report();
-			}
-			else if (alt_mask) {
-				del_key(KC_END);
-				unregister_code(KC_LALT);
-				send_keyboard_report();
-				register_code(KC_LALT);
-			}
-			else {
-				del_key(KC_DOWN);
-				send_keyboard_report();
-			}
-		}
-		break;
-
-	case PGUP:
-		shift_mask = get_mods() & SHIFT_MASK;
-		alt_mask = get_mods() & ALT_MASK;
-		if (record->event.pressed) {
-			if (shift_mask) {
-				add_key(KC_PGUP);
-				send_keyboard_report();
-			}
-			else if (alt_mask) {
-				add_key(KC_HOME);
-				unregister_code(KC_LALT);
-				send_keyboard_report();
-				register_code(KC_LALT);
-			}
-			else {
-				add_key(KC_UP);
-				send_keyboard_report();
-			}
-		}
-		else {
-			if (shift_mask) {
-				del_key(KC_PGUP);
-				send_keyboard_report();
-			}
-			else if (alt_mask) {
-				del_key(KC_HOME);
-				unregister_code(KC_LALT);
-				send_keyboard_report();
-				register_code(KC_LALT);
-			}
-			else {
-				del_key(KC_UP);
-				send_keyboard_report();
-			}
-		}
-		break;
-	}
-}
