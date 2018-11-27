@@ -50,7 +50,9 @@ void action_function(keyrecord_t *record, uint8_t id, uint8_t opt) {
 			}
 			else if (alt_mask) {
 				add_key(KC_END);
+				unregister_code(KC_LALT);
 				send_keyboard_report();
+				register_code(KC_LALT);
 			}
 			else {
 				add_key(KC_DOWN);
@@ -64,7 +66,9 @@ void action_function(keyrecord_t *record, uint8_t id, uint8_t opt) {
 			}
 			else if (alt_mask) {
 				del_key(KC_END);
+				unregister_code(KC_LALT);
 				send_keyboard_report();
+				register_code(KC_LALT);
 			}
 			else {
 				del_key(KC_DOWN);
@@ -83,7 +87,9 @@ void action_function(keyrecord_t *record, uint8_t id, uint8_t opt) {
 			}
 			else if (alt_mask) {
 				add_key(KC_HOME);
+				unregister_code(KC_LALT);
 				send_keyboard_report();
+				register_code(KC_LALT);
 			}
 			else {
 				add_key(KC_UP);
@@ -97,7 +103,9 @@ void action_function(keyrecord_t *record, uint8_t id, uint8_t opt) {
 			}
 			else if (alt_mask) {
 				del_key(KC_HOME);
+				unregister_code(KC_LALT);
 				send_keyboard_report();
+				register_code(KC_LALT);
 			}
 			else {
 				del_key(KC_UP);
