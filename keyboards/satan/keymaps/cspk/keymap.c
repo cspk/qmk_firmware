@@ -1,6 +1,7 @@
 #include QMK_KEYBOARD_H
 
 #define SHIFT_MASK (MOD_BIT(KC_LSHIFT) | MOD_BIT(KC_RSHIFT))
+#define ALT_MASK (MOD_BIT(KC_LALT) | MOD_BIT(KC_RALT))
 
 #define LAYER_BASIC 0
 #define LAYER_FUNCTION 1
@@ -36,14 +37,19 @@ const uint16_t PROGMEM fn_actions[] = {
 };
 
 void action_function(keyrecord_t *record, uint8_t id, uint8_t opt) {
-	uint8_t shift_j_pgdown_mask = 0;
-	uint8_t shift_k_pgup_mask = 0;
+	uint8_t shift_mask = 0;
+	uint8_t alt_mask = 0;
 	switch (id) {
 	case PGDOWN:
-		shift_j_pgdown_mask = get_mods() & SHIFT_MASK;
+		shift_mask = get_mods() & SHIFT_MASK;
+		alt_mask = get_mods() & ALT_MASK;
 		if (record->event.pressed) {
-			if (shift_j_pgdown_mask) {
+			if (shift_mask) {
 				add_key(KC_PGDN);
+				send_keyboard_report();
+			}
+			else if (alt_mask) {
+				add_key(KC_END);
 				send_keyboard_report();
 			}
 			else {
@@ -52,8 +58,12 @@ void action_function(keyrecord_t *record, uint8_t id, uint8_t opt) {
 			}
 		}
 		else {
-			if (shift_j_pgdown_mask) {
+			if (shift_mask) {
 				del_key(KC_PGDN);
+				send_keyboard_report();
+			}
+			else if (alt_mask) {
+				del_key(KC_END);
 				send_keyboard_report();
 			}
 			else {
@@ -64,10 +74,15 @@ void action_function(keyrecord_t *record, uint8_t id, uint8_t opt) {
 		break;
 
 	case PGUP:
-		shift_k_pgup_mask = get_mods() & SHIFT_MASK;
+		shift_mask = get_mods() & SHIFT_MASK;
+		alt_mask = get_mods() & ALT_MASK;
 		if (record->event.pressed) {
-			if (shift_k_pgup_mask) {
+			if (shift_mask) {
 				add_key(KC_PGUP);
+				send_keyboard_report();
+			}
+			else if (alt_mask) {
+				add_key(KC_HOME);
 				send_keyboard_report();
 			}
 			else {
@@ -76,8 +91,12 @@ void action_function(keyrecord_t *record, uint8_t id, uint8_t opt) {
 			}
 		}
 		else {
-			if (shift_k_pgup_mask) {
+			if (shift_mask) {
 				del_key(KC_PGUP);
+				send_keyboard_report();
+			}
+			else if (alt_mask) {
+				del_key(KC_HOME);
 				send_keyboard_report();
 			}
 			else {
