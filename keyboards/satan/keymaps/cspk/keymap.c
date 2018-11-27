@@ -40,51 +40,51 @@ void action_function(keyrecord_t *record, uint8_t id, uint8_t opt) {
 	uint8_t shift_k_pgup_mask = 0;
 	switch (id) {
 	case PGDOWN:
-	shift_j_pgdown_mask = get_mods() & SHIFT_MASK;
-	if (record->event.pressed) {
-		if (shift_j_pgdown_mask) {
-			add_key(KC_PGDN);
-			send_keyboard_report();
+		shift_j_pgdown_mask = get_mods() & SHIFT_MASK;
+		if (record->event.pressed) {
+			if (shift_j_pgdown_mask) {
+				add_key(KC_PGDN);
+				send_keyboard_report();
+			}
+			else {
+				add_key(KC_DOWN);
+				send_keyboard_report();
+			}
 		}
 		else {
-			add_key(KC_DOWN);
-			send_keyboard_report();
+			if (shift_j_pgdown_mask) {
+				del_key(KC_PGDN);
+				send_keyboard_report();
+			}
+			else {
+				del_key(KC_DOWN);
+				send_keyboard_report();
+			}
 		}
-	}
-	else {
-		if (shift_j_pgdown_mask) {
-			del_key(KC_PGDN);
-			send_keyboard_report();
-		}
-		else {
-			del_key(KC_DOWN);
-			send_keyboard_report();
-		}
-	}
-	break;
+		break;
 
 	case PGUP:
-	shift_k_pgup_mask = get_mods() & SHIFT_MASK;
-	if (record->event.pressed) {
-		if (shift_k_pgup_mask) {
-			add_key(KC_PGUP);
-			send_keyboard_report();
+		shift_k_pgup_mask = get_mods() & SHIFT_MASK;
+		if (record->event.pressed) {
+			if (shift_k_pgup_mask) {
+				add_key(KC_PGUP);
+				send_keyboard_report();
+			}
+			else {
+				add_key(KC_UP);
+				send_keyboard_report();
+			}
 		}
 		else {
-			add_key(KC_UP);
-			send_keyboard_report();
+			if (shift_j_pgdown_mask) {
+				del_key(KC_PGUP);
+				send_keyboard_report();
+			}
+			else {
+				del_key(KC_UP);
+				send_keyboard_report();
+			}
 		}
+		break;
 	}
-	else {
-		if (shift_j_pgdown_mask) {
-			del_key(KC_PGUP);
-			send_keyboard_report();
-		}
-		else {
-			del_key(KC_UP);
-			send_keyboard_report();
-		}
-	}
-	break;
-  }
 }
