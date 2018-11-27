@@ -76,7 +76,7 @@ void action_function(keyrecord_t *record, uint8_t id, uint8_t opt) {
 			}
 		}
 		else {
-			if (shift_j_pgdown_mask) {
+			if (shift_k_pgup_mask) {
 				del_key(KC_PGUP);
 				send_keyboard_report();
 			}
