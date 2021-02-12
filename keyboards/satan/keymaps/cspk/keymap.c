@@ -33,7 +33,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 		_______,_______,_______,_______,_______,_______,_______,KC_MPRV,KC_MPLY,KC_MSTP,KC_MNXT, KC_VOLD, KC_VOLU, KC_MUTE, \
 		_______,_______,_______,_______,_______,_______,KC_LEFT,KC_DOWN,KC_UP,KC_RGHT,_______,KC_GRV ,_______, \
 		_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______,_______, \
-		_______,_______,_______,  KC_CAPS,  TG(LAYER_ARROWS),_______,KC_INS,RESET
+		_______,_______,_______,  KC_CAPS,  TG(LAYER_ARROWS),KC_PSCR,KC_INS,RESET
 	),
 
 	[LAYER_PGUPDOWN] = LAYOUT_60_ansi(
